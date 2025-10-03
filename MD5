@@ -1,0 +1,14 @@
+6e1b280a057296a2b209e8123b7003b3 *DESCRIPTION
+be5c5d963cac7024e37899cb2743db46 *LICENSE
+74c8db42daa9630474b6a3d68c0a9e3d *NAMESPACE
+00f32e8e14b6e11d89a6b0364e7a80e5 *R/AV_AH.R
+d715767e117a780e84127dace3cfed7e *R/indicadores.R
+0165b7c0e95b2c102c8dde7f052cc5bc *R/padronizar_balanco.R
+26647016ad29a822fadcd7fdc0f2f512 *R/zzz.R
+a6c038a252872b4240d246c4f6dd683f *man/calcular_AV_AH.Rd
+34e7a2b0f80c4c77f90da6dac4c55e0e *man/categorias.Rd
+47e910c09b2078ebe4ce01ec32a7043b *man/classificar_conta.Rd
+b199dddab83ed0094344211d53135be5 *man/conv_br_numeric.Rd
+9757d3c048b6b586549a7551f9e676a3 *man/indicadores.Rd
+30b42bfdaf98bdf1a140b56b27d2481b *man/normalizar_texto.Rd
+8bf23d5a43844d22e08e6fdc572e1ea5 *man/padronizar_balanco.Rd
