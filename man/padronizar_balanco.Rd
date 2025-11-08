@@ -14,7 +14,7 @@ e as colunas seguintes devem conter valores financeiros em formato de texto (ex:
 Uma lista com dois objetos:
 \describe{
   \item{\code{agregado}}{Um \code{data.frame} com os valores agregados por categoria contabil.}
-  \item{\code{original}}{O \code{data.frame} original com os valores convertidos e a nova coluna \code{Categoria}.}
+  \item{\code{original}}{O \code{data.frame} original com os valores convertidos e a nova coluna \code{categorias_bp}.}
 }
 }
 \description{

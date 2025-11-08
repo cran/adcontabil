@@ -2,55 +2,65 @@
 % Please edit documentation in R/indicadores.R
 \name{indicadores}
 \alias{indicadores}
-\title{Calcula indicadores financeiros de liquidez e endividamento}
+\title{Calcula indicadores financeiros a partir do Balanco Patrimonial e da Demonstracao do Resultado}
 \usage{
-indicadores(df)
+indicadores(bp = NULL, dre = NULL)
 }
 \arguments{
-\item{df}{Um \code{data.frame} com colunas representando anos (valores numericos) e uma coluna chamada
-\code{Categoria}, contendo os rotulos padronizados das contas contabeis agregadas.}
+\item{bp}{Um data.frame contendo o Balanco Patrimonial, com uma coluna Categoria e
+colunas adicionais representando anos. As categorias devem seguir o padrao:
+- ACO: Ativo Circulante Operacional
+- ACF: Ativo Circulante Financeiro
+- PCO: Passivo Circulante Operacional
+- PCF: Passivo Circulante Financeiro
+- ANC: Ativo Nao Circulante
+- PNC: Passivo Nao Circulante
+- PL: Patrimonio Liquido}
+
+\item{dre}{Um data.frame contendo a Demonstracao do Resultado, tambem com coluna
+Categoria e colunas representando anos. As principais categorias esperadas incluem:
+- RECEITA_LIQUIDA
+- CUSTO_BENS_SERVICOS
+- DESPESAS_OPERACIONAIS
+- RESULTADO_FINANCEIRO
+- RESULTADO_LIQUIDO}
 }
 \value{
-Um \code{data.frame} onde cada linha representa um indicador financeiro e cada coluna subsequente
-representa o valor do indicador para um determinado ano.
+Uma lista contendo tres data.frames:
+- indicadores_bp: Liquidez e estrutura de capital
+- indicadores_dre: Margens operacionais
+- indicadores_conjuntos: Indicadores integrados (inclui DuPont)
 }
 \description{
-Esta funcao recebe um data frame resultante da agregacao de contas contabeis por categoria
-(geralmente produzido pela funcao \code{processar_balanco}) e calcula indicadores classicos de
-liquidez e endividamento com base nas categorias padronizadas: \code{ACO}, \code{ACF}, \code{PCO},
-\code{PCF}, \code{ANC}, \code{PNC} e \code{PL}.
+Esta funcao recebe dois data frames padronizados: um representando o Balanco Patrimonial
+(bp) e outro representando a Demonstracao do Resultado (dre). A partir deles,
+calcula indicadores classicos de liquidez, estrutura de capital, margens operacionais,
+eficiencia e rentabilidade.
 }
 \details{
-As categorias devem seguir os seguintes significados:
-\itemize{
-  \item \code{ACO}: Ativo Circulante Operacional
-  \item \code{ACF}: Ativo Circulante Financeiro
-  \item \code{PCO}: Passivo Circulante Operacional
-  \item \code{PCF}: Passivo Circulante Financeiro
-  \item \code{ANC}: Ativo Nao Circulante
-  \item \code{PNC}: Passivo Nao Circulante
-  \item \code{PL}: Patrimonio Liquido
-}
+Caso a DRE contenha as categorias LUCRO_BRUTO, DESPESAS_OPERACIONAIS e
+RESULTADO_FINANCEIRO, a funcao calcula automaticamente o EBIT, utilizado nos indicadores
+de margem operacional e na razao EBIT/Ativo.
 
 Indicadores calculados:
-\itemize{
-  \item \strong{Liquidez Corrente:} (ACO + ACF) / (PCO + PCF)
-  \item \strong{Liquidez Seca:} ACO / (PCO + PCF)
-  \item \strong{Liquidez Imediata:} ACF / (PCO + PCF)
-  \item \strong{Endividamento Geral:} (PCO + PCF + PNC) / (ACO + ACF + ANC)
-  \item \strong{Composicao do Endividamento:} (PCO + PCF) / (PCO + PCF + PNC)
-  \item \strong{Imobilizacao do PL:} ANC / PL
-}
-}
-\examples{
-# Criando um data frame de balanço com todas as categorias essenciais
-df <- data.frame(
-  Categoria = c("ACO", "ACF", "PCO", "PCF", "ANC", "PNC", "PL"),
-  X2022 = c(1000, 500, 600, 400, 2000, 1500, 2000),
-  X2023 = c(1200, 600, 700, 500, 2200, 1600, 2300)
-)
 
-# Calculando os indicadores
-indicadores(df)
+Balanco Patrimonial:
+- Liquidez Corrente = (ACO + ACF) / (PCO + PCF)
+- Liquidez Seca = ACO / (PCO + PCF)
+- Liquidez Imediata = ACF / (PCO + PCF)
+- Endividamento Geral = (PCO + PCF + PNC) / (ACO + ACF + ANC)
+- Composicao do Endividamento = (PCO + PCF) / (PCO + PCF + PNC)
+- Imobilizacao do PL = ANC / PL
 
+Demonstracao do Resultado:
+- Margem Bruta = (RECEITA_LIQUIDA - CUSTO_BENS_SERVICOS) / RECEITA_LIQUIDA
+- Margem Operacional = EBIT / RECEITA_LIQUIDA
+- Margem Liquida = RESULTADO_LIQUIDO / RECEITA_LIQUIDA
+
+Indicadores Integrados (DuPont e rentabilidade):
+- ROA = RESULTADO_LIQUIDO / Ativo Total
+- ROE = RESULTADO_LIQUIDO / PL
+- Giro do Ativo = RECEITA_LIQUIDA / Ativo Total
+- Alavancagem Financeira = Ativo Total / PL
+- EBIT/Ativo = EBIT / Ativo Total
 }

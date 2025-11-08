@@ -29,19 +29,22 @@
 #'   X2022 = c(1000, 800),
 #'   X2023 = c(1200, 900)
 #' )
+#'
+#' # Padronizando o balanço
 #' resultado <- padronizar_balanco(df)
 #'
-#' # Calculando análise vertical e horizontal
+#' # Calculando análise vertical e horizontal para dados agregados
 #' av_ah <- calcular_AV_AH(resultado$agregado, tipo = "agregado")
+#'
+#' # Visualizando partes do resultado
 #' head(av_ah$AV_AH)
 #' head(av_ah$Projecao)
-#'
 #' @export
 calcular_AV_AH <- function(df, tipo) {
   `%>%` <- magrittr::`%>%`
 
   # Definir se estamos lidando com df_agregado ou BP_SLCE_P
-  nome_coluna_categoria <- ifelse(tipo == "agregado", "Categoria", "Conta")
+  nome_coluna_categoria <- ifelse(tipo == "agregado", "categorias_bp", "Conta")
 
   # Garantir que os valores são numéricos
   df <- df %>%
@@ -58,12 +61,12 @@ calcular_AV_AH <- function(df, tipo) {
   # Determinar Ativo Total e Passivo Total para cada ano
   if (tipo == "agregado") {
     df_totais <- df %>%
-      dplyr::filter(Categoria %in% c("ACO", "ACF", "ANC")) %>%
+      dplyr::filter(categorias_bp %in% c("ACO", "ACF", "ANC")) %>%
       dplyr::summarise(across(dplyr::all_of(anos), sum, na.rm = TRUE)) %>%
       dplyr::rename_with(~ paste0(.x, "_Ativo_Total"))
 
     df_totais_passivo <- df %>%
-      dplyr::filter(Categoria %in% c("PCO", "PCF", "PNC", "PL")) %>%
+      dplyr::filter(categorias_bp %in% c("PCO", "PCF", "PNC", "PL")) %>%
       dplyr::summarise(dplyr::across(all_of(anos), sum, na.rm = TRUE)) %>%
       dplyr::rename_with(~ paste0(.x, "_Passivo_Total"))
   } else {
@@ -83,10 +86,10 @@ calcular_AV_AH <- function(df, tipo) {
     dplyr::left_join(df_totais, by = character()) %>%
     dplyr::left_join(df_totais_passivo, by = character()) %>%
     dplyr::mutate(across(dplyr::all_of(anos),
-                  ~ ifelse(get(nome_coluna_categoria) %in% c("ACO", "ACF", "ANC"),
-                           . / get(paste0(dplyr::cur_column(), "_Ativo_Total")),
-                           . / get(paste0(dplyr::cur_column(), "_Passivo_Total"))),
-                  .names = "{.col}_AV")) %>%
+                         ~ ifelse(categorias_bp %in% c("ACO", "ACF", "ANC"),
+                                  . / get(paste0(dplyr::cur_column(), "_Ativo_Total")),
+                                  . / get(paste0(dplyr::cur_column(), "_Passivo_Total"))),
+                         .names = "{.col}_AV")) %>%
     dplyr::select(-ends_with("_Ativo_Total"), -dplyr::ends_with("_Passivo_Total"))  # Remover colunas auxiliares
 
   # Definir o ano base para Análise Horizontal

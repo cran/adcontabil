@@ -2,8 +2,8 @@
 
 export(calcular_AV_AH)
 export(indicadores)
-export(normalizar_texto)
 export(padronizar_balanco)
+export(padronizar_dre)
 importFrom(data.table,":=")
 importFrom(dplyr,"%>%")
 importFrom(dplyr,across)

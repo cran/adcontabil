@@ -1,5 +1,5 @@
 Package: adcontabil
-Version: 1.0.4
+Version: 1.1.0
 Title: Accounting Analysis
 Description: Provides methods for processing corporate balance sheets with a focus on the Brazilian reporting format. Includes data standardization, classification by accounting categories, and aggregation of values. Supports accounting and financial analyses of companies, improving efficiency and ensuring reproducibility of empirical studies.
 License: MIT + file LICENSE
@@ -21,9 +21,9 @@ Authors@R: c(
     )
   )
 Depends: R (>= 4.1.0)
-Packaged: 2025-09-26 22:39:29 UTC; USER
+Packaged: 2025-11-08 16:30:39 UTC; USER
 Author: Lissandro Costa de Sousa [cre, aut],
   Francisco Gildemir Ferreira da Silva [ths, aut]
 Maintainer: Lissandro Costa de Sousa <lisandrosousa54@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-10-03 13:10:02 UTC
+Date/Publication: 2025-11-08 16:40:02 UTC

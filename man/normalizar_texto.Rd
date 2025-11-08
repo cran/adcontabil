@@ -13,11 +13,7 @@ normalizar_texto(x)
 Vetor de caracteres normalizado.
 }
 \description{
-Esta funcao converte o texto para minusculas, normaliza para Unicode NFC
-e remove todos os acentos, cedilhas e marcas diacriticas, retornando
-apenas caracteres ASCII basicos.
+Função interna utilizada nos processos de padronização textual.
+Não deve ser chamada diretamente pelo usuário final.
 }
-\examples{
-normalizar_texto(c("Ção", "Ótimo", "maçã", "PÃO"))
-# [1] "cao"   "otimo" "maca" "pao"
-}
+\keyword{internal}

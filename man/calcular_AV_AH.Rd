@@ -35,11 +35,14 @@ df <- data.frame(
   X2022 = c(1000, 800),
   X2023 = c(1200, 900)
 )
+
+# Padronizando o balanço
 resultado <- padronizar_balanco(df)
 
-# Calculando análise vertical e horizontal
+# Calculando análise vertical e horizontal para dados agregados
 av_ah <- calcular_AV_AH(resultado$agregado, tipo = "agregado")
+
+# Visualizando partes do resultado
 head(av_ah$AV_AH)
 head(av_ah$Projecao)
-
 }

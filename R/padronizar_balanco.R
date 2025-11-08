@@ -13,7 +13,7 @@
 #' @return Uma lista com dois objetos:
 #' \describe{
 #'   \item{\code{agregado}}{Um \code{data.frame} com os valores agregados por categoria contabil.}
-#'   \item{\code{original}}{O \code{data.frame} original com os valores convertidos e a nova coluna \code{Categoria}.}
+#'   \item{\code{original}}{O \code{data.frame} original com os valores convertidos e a nova coluna \code{categorias_bp}.}
 #' }
 #'
 #' @examples
@@ -47,12 +47,12 @@ padronizar_balanco <- function(df){
 
   # Aplica a categorizacao das contas
   dados <- df %>%
-    dplyr::mutate(Categoria = sapply(Conta, classificar_conta)) # %>%
-    # filter(!is.na(Categoria))  # Remove contas sem categoria atribuida
+    dplyr::mutate(categorias_bp = sapply(Conta, classificar_conta_bp)) # %>%
+    # filter(!is.na(categorias_bp))  # Remove contas sem categoria atribuida
 
   # Agrega os valores por categoria
   df_agregado <- dados %>%
-    dplyr::group_by(Categoria) %>%
+    dplyr::group_by(categorias_bp) %>%
     dplyr::summarise(dplyr::across(where(is.numeric), sum, na.rm = TRUE), .groups = "drop")
 
   # Exibir mensagem de conclusao
