@@ -2,47 +2,45 @@
 % Please edit documentation in R/AV_AH.R
 \name{calcular_AV_AH}
 \alias{calcular_AV_AH}
-\title{Calcular Análise Vertical e Horizontal com projeção}
+\title{Calcular Analise Vertical e Horizontal com projecao}
 \usage{
 calcular_AV_AH(df, tipo)
 }
 \arguments{
-\item{df}{Um data frame contendo os dados contábeis. Deve conter colunas com valores numéricos para diferentes anos, além de uma coluna identificadora da natureza das contas (por exemplo, \code{"Categoria"} ou \code{"Conta"}).}
+\item{df}{Um data frame contendo os dados contabeis. Deve conter colunas com valores numericos para diferentes anos, alem de uma coluna identificadora da natureza das contas (por exemplo, \code{"Categoria"} ou \code{"Conta"}).}
 
-\item{tipo}{Um parâmetro do tipo \code{character} que indica a estrutura do data frame. Deve ser \code{"agregado"} quando os dados estão organizados por categorias (ex: ACO, ANC, PL etc.), ou outro valor (ex: \code{"detalhado"}) quando as contas individuais estão identificadas por uma coluna chamada \code{"Conta"}.}
+\item{tipo}{Um parametro do tipo \code{character} que indica a estrutura do data frame. Deve ser \code{"agregado"} quando os dados estao organizados por categorias (ex: ACO, ANC, PL etc.), ou outro valor (ex: \code{"detalhado"}) quando as contas individuais estao identificadas por uma coluna chamada \code{"Conta"}.}
 }
 \value{
 Uma lista com dois data frames:
 \describe{
-  \item{\code{AV_AH}}{Data frame contendo os valores originais, os resultados da Análise Vertical (com sufixo \code{_AV}) e da Análise Horizontal (com sufixo \code{_AH}).}
-  \item{\code{Projecao}}{Data frame contendo a projeção de valores para o ano seguinte, com base em um crescimento de 5\%.}
+  \item{\code{AV_AH}}{Data frame contendo os valores originais, os resultados da Analise Vertical (com sufixo \code{_AV}) e da Analise Horizontal (com sufixo \code{_AH}).}
+  \item{\code{Projecao}}{Data frame contendo a projecao de valores para o ano seguinte, com base em um crescimento de 5\%.}
 }
 }
 \description{
-Esta função realiza a Análise Vertical (AV) e Análise Horizontal (AH) com base em dados contábeis de empresas, podendo ser aplicada tanto a dados agregados quanto a dados detalhados (ex: Balanço Patrimonial individualizado). Além disso, gera uma projeção para o ano seguinte, assumindo um crescimento de 5% nos valores.
+Esta funcao realiza a Analise Vertical (AV) e Analise Horizontal (AH) com base em dados contabeis de empresas, podendo ser aplicada tanto a dados agregados quanto a dados detalhados (ex: Balanco Patrimonial individualizado). Alem disso, gera uma projecao para o ano seguinte, assumindo um crescimento de 5% nos valores.
 }
 \details{
-A Análise Vertical (AV) expressa cada item patrimonial como uma proporção do total do ativo ou passivo correspondente no mesmo ano.
+A Analise Vertical (AV) expressa cada item patrimonial como uma proporcao do total do ativo ou passivo correspondente no mesmo ano.
 
-A Análise Horizontal (AH) compara a evolução dos valores ao longo dos anos, em relação ao primeiro ano da base de dados (ano base).
+A Analise Horizontal (AH) compara a evolucao dos valores ao longo dos anos, em relacao ao primeiro ano da base de dados (ano base).
 
-A função ainda projeta valores para o ano seguinte com base em um crescimento linear de 5% sobre os valores do último ano disponível.
+A funcao ainda projeta valores para o ano seguinte com base em um crescimento linear de 5% sobre os valores do ultimo ano disponivel.
 }
 \examples{
-# Criando dados agregados de exemplo
 df <- data.frame(
-  Conta = c("Ativo Circulante", "Passivo Circulante"),
-  X2022 = c(1000, 800),
-  X2023 = c(1200, 900)
+  Conta = c(
+    "Caixa e equivalentes de caixa",
+    "Clientes",
+    "Estoques",
+    "Fornecedores",
+    "Emprestimos e financiamentos"
+  ),
+  X2022 = c(1000, 2500, 1800, 2100, 1500),
+  X2023 = c(1200, 2600, 1700, 2300, 1600)
 )
 
-# Padronizando o balanço
 resultado <- padronizar_balanco(df)
-
-# Calculando análise vertical e horizontal para dados agregados
 av_ah <- calcular_AV_AH(resultado$agregado, tipo = "agregado")
-
-# Visualizando partes do resultado
-head(av_ah$AV_AH)
-head(av_ah$Projecao)
 }

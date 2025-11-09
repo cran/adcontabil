@@ -54,6 +54,37 @@
 #' - Alavancagem Financeira = Ativo Total / PL
 #' - EBIT/Ativo = EBIT / Ativo Total
 #'
+#' @examples
+#' # Exemplo de dados padronizados para o Balanço Patrimonial
+#' bp <- data.frame(
+#'   Categoria = c("ACO", "ACF", "PCO", "PCF", "ANC", "PNC", "PL"),
+#'   `2023` = c(50000, 20000, 30000, 10000, 80000, 40000, 90000),
+#'   `2024` = c(54000, 22000, 32000, 12000, 82000, 45000, 92000),
+#'   check.names = FALSE
+#' )
+#'
+#' # Exemplo de dados padronizados para a Demonstração do Resultado
+#' dre <- data.frame(
+#'   Categoria = c(
+#'     "RECEITA_LIQUIDA",
+#'     "CUSTO_BENS_SERVICOS",
+#'     "DESPESAS_OPERACIONAIS",
+#'     "RESULTADO_FINANCEIRO",
+#'     "RESULTADO_LIQUIDO"
+#'   ),
+#'   `2023` = c(150000, 90000, 20000, -5000, 25000),
+#'   `2024` = c(160000, 95000, 21000, -6000, 27000),
+#'   check.names = FALSE
+#' )
+#'
+#' # Cálculo dos indicadores
+#' resultado <- indicadores(bp, dre)
+#'
+#' # Visualizando cada conjunto de resultados
+#' resultado$indicadores_bp        # Liquidez, estrutura de capital
+#' resultado$indicadores_dre       # Margens operacionais e líquidas
+#' resultado$indicadores_conjuntos # ROA, ROE, DuPont etc.
+#'
 #' @export
 indicadores <- function(bp = NULL, dre = NULL) {
 

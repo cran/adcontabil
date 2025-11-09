@@ -47,16 +47,16 @@ padronizar_balanco <- function(df){
 
   # Aplica a categorizacao das contas
   dados <- df %>%
-    dplyr::mutate(categorias_bp = sapply(Conta, classificar_conta_bp)) # %>%
-    # filter(!is.na(categorias_bp))  # Remove contas sem categoria atribuida
+    dplyr::mutate(Categoria = sapply(Conta, classificar_conta_bp)) # %>%
+    # filter(!is.na(Categorias))  # Remove contas sem categoria atribuida
 
   # Agrega os valores por categoria
   df_agregado <- dados %>%
-    dplyr::group_by(categorias_bp) %>%
+    dplyr::group_by(Categoria) %>%
     dplyr::summarise(dplyr::across(where(is.numeric), sum, na.rm = TRUE), .groups = "drop")
 
   # Exibir mensagem de conclusao
-  message("s data frames foram preparados com sucesso.")
+  message("O Balaco Patrimonial foi padronizada com sucesso.")
 
   # Retorna os dois data frames como uma lista
   return(list(agregado = df_agregado, original = dados))
